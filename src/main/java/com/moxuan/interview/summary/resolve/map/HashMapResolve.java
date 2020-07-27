@@ -23,8 +23,81 @@ public class HashMapResolve {
          * 2. hashMap的键值对数量 = 数组键值对+所有单链表的键值对 (Map的大小)
          * 3. hashMap的容量大小 = 数组大小
          * 4. 每一个链表的头结点 =数组元素  链表的节点值 = 对应hash 键值对
+         * 5. 插入数据的方式为 头插法
+         * 6. 数组元素 & 链表节点的 实现类
+         *  HashMap的本质 = 1个存储Entry类对象的数组 + 多个单链表
+         *  Entry对象本质 = 1个映射（键 - 值对），属性包括：键（key）、值（value） & 下1节点( next)
+         *  = 单链表的指针 = 也是一个Entry对象，用于解决hash冲突
+         * 源码分析:
+         *    Entry类实现了Map.Entry接口
+         *   即 实现了getKey()、getValue()、equals(Object o)和hashCode()等方法
+         *   static class Entry<K,V> implements Map.Entry<K,V> {
+         *      final K key;  // 键
+         *     V value;      // 值
+         *     Entry<K,V> next; // 指向下一个节点 ，也是一个Entry对象，从而形成解决hash冲突的单链表
+         *     int hash;    // hash值
          *
+         *      构造方法，创建一个Entry
+         *     参数：哈希值h，键值k，值v、下一个节点n
+         *     Entry(int h, K k, V v, Entry<K,V> n) {
+         *         value = v;
+         *         next = n;
+         *         key = k;
+         *         hash = h;
+         *     }
+         *      // 返回 与 此项 对应的键
+         *     public final K getKey() {
+         *         return key;
+         *     }
          *
+         *     // 返回 与 此项 对应的值
+         *     public final V getValue() {
+         *         return value;
+         *     }
+         *
+         *     public final V setValue(V newValue) {
+         *         V oldValue = value;
+         *         value = newValue;
+         *         return oldValue;
+         *     }
+         *
+         *     equals（）
+         *    作用：判断2个Entry是否相等，必须key和value都相等，才返回true
+         *    public final boolean equals(Object o) {
+         *         if (!(o instanceof Map.Entry))
+         *             return false;
+         *         Map.Entry e = (Map.Entry)o;
+         *         Object k1 = getKey();
+         *         Object k2 = e.getKey();
+         *         if (k1 == k2 || (k1 != null && k1.equals(k2))) {
+         *             Object v1 = getValue();
+         *             Object v2 = e.getValue();
+         *             if (v1 == v2 || (v1 != null && v1.equals(v2)))
+         *                 return true;
+         *         }
+         *         return false;
+         *     }
+         *
+         *     public final int hashCode() {
+         *         return Objects.hashCode(getKey()) ^ Objects.hashCode(getValue());
+         *     }
+         *
+         *     public final String toString() {
+         *         return getKey() + "=" + getValue();
+         *     }
+         *
+         *      当向HashMap中添加元素时，即调用put(k,v)时，
+         *      对已经在HashMap中k位置进行v的覆盖时，会调用此方法
+         *      此处没做任何处理
+         *      void recordAccess(HashMap<K,V> m) {
+         *     }
+         *
+         *     当从HashMap中删除了一个Entry时，会调用该函数
+         *     此处没做任何处理
+         *     void recordRemoval(HashMap<K,V> m) {
+         *     }
+         *   }
+         *   }
          *
          */
 
@@ -57,10 +130,14 @@ public class HashMapResolve {
           *
           *
           *
+          *
+          *
           */
 
         HashMap<String, String> HashMap = new HashMap<>(8);
 
     }
+
+
 
 }
