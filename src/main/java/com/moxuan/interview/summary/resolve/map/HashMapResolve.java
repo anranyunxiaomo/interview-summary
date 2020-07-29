@@ -127,6 +127,12 @@ public class HashMapResolve {
           *       6:    0.00001316
           *       7:    0.00000094
           *       8:    0.00000006
+          *   1. 链表节点转换成红黑树节点的阈值, 节点数 >= 8    但是通过源码可以看出  当链表节点长度等于9 的时候 才会调用
+          *     treeifyBin(tab, hash);
+          *   2. 但是链表转换成红黑树 还需要确定 当前hashmap 的容量   MIN_TREEIFY_CAPACITY =64   是不是大于等于 64
+          *   如果 hashmap 的容量 小于 64   会调用扩容方法resize(); 进行扩容
+          *   当链表长度继续增加  对应的 会再次判断 hashmap 的容量是否大于64 当 容量还是小于 MIN_TREEIFY_CAPACITY=64
+          *   会继续扩容resize() 直至 hashmap 容量 超过等于 64 后,才会去调用链表转换成红黑树的方法
           *
           *
           *
@@ -137,14 +143,18 @@ public class HashMapResolve {
           */
 
         HashMap<Object, String> HashMap = new HashMap<>();
-        HashMap.put(new HashMapBean(2),"222222");
-        HashMap.put(new HashMapBean(4),"222222");
-        HashMap.put(new HashMapBean(6),"222222");
-        HashMap.put(new HashMapBean(8),"222222");
-        HashMap.put(new HashMapBean(10),"222222");
-        HashMap.put(new HashMapBean(12),"222222");
-        HashMap.put(new HashMapBean(14),"222222");
-        HashMap.put(new HashMapBean(16),"222222");
+        HashMap.put(new HashMapBean(4),"2221222");
+        HashMap.put(new HashMapBean(8),"2222122");
+        HashMap.put(new HashMapBean(12),"2212222");
+        HashMap.put(new HashMapBean(16),"2221222");
+        HashMap.put(new HashMapBean(20),"2222122");
+        HashMap.put(new HashMapBean(24),"2111122222");
+        HashMap.put(new HashMapBean(28),"2212222");
+        HashMap.put(new HashMapBean(32),"2122222");
+        HashMap.put(new HashMapBean(36),"221111112222");
+        HashMap.put(new HashMapBean(40),"111111111111");
+
+
 
 }
 
