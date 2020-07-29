@@ -1,5 +1,7 @@
 package com.moxuan.interview.summary.resolve.map;
 
+import com.moxuan.interview.summary.resolve.entity.HashMapBean;
+
 import java.util.HashMap;
 
 /**
@@ -134,10 +136,16 @@ public class HashMapResolve {
           *
           */
 
-        HashMap<String, String> HashMap = new HashMap<>(8);
+        HashMap<Object, String> HashMap = new HashMap<>();
+        HashMap.put(new HashMapBean(2),"222222");
+        HashMap.put(new HashMapBean(4),"222222");
+        HashMap.put(new HashMapBean(6),"222222");
+        HashMap.put(new HashMapBean(8),"222222");
+        HashMap.put(new HashMapBean(10),"222222");
+        HashMap.put(new HashMapBean(12),"222222");
+        HashMap.put(new HashMapBean(14),"222222");
+        HashMap.put(new HashMapBean(16),"222222");
 
-    }
-
-
+}
 
 }
