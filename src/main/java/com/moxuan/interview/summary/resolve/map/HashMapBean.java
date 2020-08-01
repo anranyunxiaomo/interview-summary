@@ -1,6 +1,4 @@
-package com.moxuan.interview.summary.resolve.entity;
-
-import java.util.Objects;
+package com.moxuan.interview.summary.resolve.map;
 
 /**
  * @ProjectName: interview-summary

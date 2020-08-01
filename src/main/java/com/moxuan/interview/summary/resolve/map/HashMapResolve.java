@@ -1,7 +1,5 @@
 package com.moxuan.interview.summary.resolve.map;
 
-import com.moxuan.interview.summary.resolve.entity.HashMapBean;
-
 import java.util.HashMap;
 
 /**
@@ -127,35 +125,37 @@ public class HashMapResolve {
           *       6:    0.00001316
           *       7:    0.00000094
           *       8:    0.00000006
-          *   1. 链表节点转换成红黑树节点的阈值, 节点数 >= 8    但是通过源码可以看出  当链表节点长度等于9 的时候 才会调用
+          *
+          *   1. 链表节点转换成红黑树节点的阈值, 节点数 >= 8 -1   TREEIFY_THRESHOLD - 1=7，
+          *   也就是说一旦binCount=7时就会执行下面的转红黑树代码   但是通过源码可以看出  当链表节点长度等于 8 的时候 才会调用
           *     treeifyBin(tab, hash);
           *   2. 但是链表转换成红黑树 还需要确定 当前hashmap 的容量   MIN_TREEIFY_CAPACITY =64   是不是大于等于 64
           *   如果 hashmap 的容量 小于 64   会调用扩容方法resize(); 进行扩容
           *   当链表长度继续增加  对应的 会再次判断 hashmap 的容量是否大于64 当 容量还是小于 MIN_TREEIFY_CAPACITY=64
           *   会继续扩容resize() 直至 hashmap 容量 超过等于 64 后,才会去调用链表转换成红黑树的方法
-          *
-          *
-          *
-          *
+          *  3.    DEFAULT_LOAD_FACTOR = 0.75f   负载因子
+          *       hashMap   初始容量为 16，负载因子为 0.75
+          *      当 hahMap 容量到多少时,会进行扩容呢   即当hashmap 当前的  size *  DEFAULT_LOAD_FACTOR 时,阈值. 会触发扩容方法
+          *     resize();   初始容量  2的4次方（16）   增长时是2的整数次方（幂） 当前容量的 乘以 2
           *
           *
           *
           */
 
-        HashMap<Object, String> HashMap = new HashMap<>();
-        HashMap.put(new HashMapBean(4),"2221222");
-        HashMap.put(new HashMapBean(8),"2222122");
-        HashMap.put(new HashMapBean(12),"2212222");
-        HashMap.put(new HashMapBean(16),"2221222");
-        HashMap.put(new HashMapBean(20),"2222122");
-        HashMap.put(new HashMapBean(24),"2111122222");
-        HashMap.put(new HashMapBean(28),"2212222");
-        HashMap.put(new HashMapBean(32),"2122222");
-        HashMap.put(new HashMapBean(36),"221111112222");
-        HashMap.put(new HashMapBean(40),"111111111111");
+
+        HashMap<Object, String> HashMap = new HashMap<>(64);
+        HashMap.put(new HashMapBean(4), "2221222");  //1
+        HashMap.put(new HashMapBean(8), "2222122");  // 2
+        HashMap.put(new HashMapBean(12), "2212222"); // 3
+        HashMap.put(new HashMapBean(16), "2221222");  // 4
+        HashMap.put(new HashMapBean(20), "2222122"); // 5
+        HashMap.put(new HashMapBean(24), "2111122222"); //6
+        HashMap.put(new HashMapBean(28), "2212222"); // 7
+        HashMap.put(new HashMapBean(32), "2122222"); //8
+        HashMap.put(new HashMapBean(36), "221111112222");
+        HashMap.put(new HashMapBean(40), "111111111111");
 
 
-
-}
+    }
 
 }
